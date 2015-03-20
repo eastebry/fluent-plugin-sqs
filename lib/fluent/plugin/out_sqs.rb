@@ -16,7 +16,7 @@ module Fluent
         config_param :aws_sec_key, :string, :default => nil
         config_param :queue_name, :string
         config_param :create_queue, :bool, :default => true
-        config_param :sqs_endpoint, :string, :default => 'sqs.ap-northeast-1.amazonaws.com'
+        config_param :region, :string, :default => 'us-east-1'
         config_param :delay_seconds, :integer, :default => 0
         config_param :include_tag, :bool, :default => true
         config_param :tag_property_name, :string, :default => '__tag'
@@ -33,7 +33,7 @@ module Fluent
                 :secret_access_key => @aws_sec_key)
 
             @sqs = AWS::SQS.new(
-                :sqs_endpoint => @sqs_endpoint)
+                :region => @region)
             if @create_queue then
                 @queue = @sqs.queues.create(@queue_name)
             else
